@@ -1,0 +1,11 @@
+----id
+ro_region
+rw_region
+
+----impl
+ro_region
+rw_region
+
+----call
+ro_region
+rw_region

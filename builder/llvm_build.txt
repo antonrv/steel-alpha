@@ -1,0 +1,11 @@
+# Release
+mkdir build_release;
+cd build_release;
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=/usr/bin/clang-9 -DCMAKE_CXX_COMPILER=/usr/bin/clang++-9 -DLLVM_ENABLE_PROJECTS="clang;libc;libcxx;libcxxabi;clang-tools-extra;lld;lldb" -GNinja ../llvm -DLLVM_BUILD_LLVM_DYLIB=1 -DBUILD_SHARED_LIBS=1 -DLLVM_PARALLEL_LINK_JOBS=1 -DLLVM_TARGETS_TO_BUILD=X86 -DCLANG_DEFAULT_LINKER=gold -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+# Debug
+mkdir build_debug;
+cd build_debug;
+cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/usr/bin/clang-9 -DCMAKE_CXX_COMPILER=/usr/bin/clang++-9 -DLLVM_ENABLE_PROJECTS="clang;libc;libcxx;libcxxabi;clang-tools-extra;lld;lldb" -GNinja ../llvm -DLLVM_BUILD_LLVM_DYLIB=1 -DBUILD_SHARED_LIBS=1 -DLLVM_PARALLEL_LINK_JOBS=1 -DLLVM_TARGETS_TO_BUILD=X86 -DCLANG_DEFAULT_LINKER=gold -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+# IMPORTANT NOTE. We have to specify -DBUILD_SHARED_LIBS=0 to avoid errors with llvm lib like "cl::option(x) initialized more than once!"

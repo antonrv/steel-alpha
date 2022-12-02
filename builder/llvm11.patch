@@ -1,0 +1,89 @@
+
+//================ clang/lib/Sema/SemaDeclAttr.cpp
+// 3129
+
+static void handleSTEELTaskAttr(Sema &S, Decl *D, const ParsedAttr &AL) {
+  StringRef Str;
+  SourceLocation LiteralLoc;
+
+  S.checkStringLiteralArgumentAttr(AL, 0, Str, &LiteralLoc);
+
+  STEELTaskAttr *NewAttr = ::new (S.Context) STEELTaskAttr(S.Context, AL, Str);
+  D->addAttr(NewAttr);
+}
+
+
+// 7392
+  // STEEL attributes
+  case ParsedAttr::AT_STEELTask:
+    // handleSimpleAttribute<STEELTaskAttr>(S, D, AL);
+    handleSTEELTaskAttr(S, D, AL);
+    break;
+
+
+//================ clang/lib/ASTMatchers/Dynamic/Registry.cpp
+// 513
+  REGISTER_MATCHER(importDecl); // STEEL
+  REGISTER_MATCHER(exportDecl); // STEEL
+
+
+//================ clang/lib/ASTMatchers/ASTMatchersInternal.cpp
+// 691
+const internal::VariadicDynCastAllOfMatcher<Decl, ImportDecl> // STEEL
+    importDecl; // STEEL
+const internal::VariadicDynCastAllOfMatcher<Decl, ExportDecl> // STEEL
+    exportDecl; // STEEL
+
+
+//================ clang/include/clang/Basic/AttrDocs.td
+// 4797
+
+def STEELDocs : Documentation {
+  let Content = [{
+Documentation for STEEL language feature. TODO
+  }];
+}
+
+def STEELTaskDocs : Documentation {
+  let Category = DocCatFunction;
+  let Heading = "task, [[steel::task]]";
+  let Content = [{
+The ``[[steel::task]]`` keyword attached before a function makes the function calls
+traceable by an STEEL runtime. TODO
+  }];
+}
+
+
+//================ clang/include/clang/Basic/Attr.td
+// 3452
+
+def STEELTask : InheritableAttr {
+  // let Spellings = [CXX11<"clang","uder">];
+  let Spellings = [CXX11<"steel","task">];
+  let Args = [StringArgument<"app", 1>];
+  // must either be a Decl in DeclNodes.td or a statement node in StmtNodes.td
+  let Subjects = SubjectList<[Function]>;
+  let ASTNode = 1;
+  let Documentation = [STEELTaskDocs];
+}
+
+
+// def STEELFunctionArgument : STEELKeyword, Var {} TODO
+// No need for keyword 'relax'. This will be a function call, and we can detect
+// the call to this easily within any function. Implicitly bound to steelrt
+// def STEELRelax : InheritableAttr, STEELKeyword {
+//   let Spellings = [Keyword<"relax">];
+//   let Subjects = SubjectList<[Var]>; // ?
+//   let ASTNode = 1;
+//   let HasCustomParsing = 1
+//   let Documentation = [STEELRelaxDocs];
+// }
+
+
+
+//================ clang/include/clang/ASTMatchers/ASTMatchers.h
+// 180
+extern const internal::VariadicDynCastAllOfMatcher<Decl, ImportDecl> // STEEL
+    importDecl; // STEEL
+extern const internal::VariadicDynCastAllOfMatcher<Decl, ExportDecl> // STEEL
+    exportDecl; // STEEL

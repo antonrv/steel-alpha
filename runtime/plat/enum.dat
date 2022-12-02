@@ -1,0 +1,10 @@
+
+----processor
+smp0
+
+----memspace
+smp0
+disk
+
+----arch
+x86_64

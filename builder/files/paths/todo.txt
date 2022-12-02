@@ -1,0 +1,1 @@
+State architecture : do the same as options. a class paths with a tuple of template states for each path

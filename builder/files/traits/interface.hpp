@@ -1,0 +1,15 @@
+
+#include "files/traits/extension.hpp"
+#include "files/traits/code.hpp"
+
+#include "files/traits/autogen.hpp"
+#include "files/traits/compilable.hpp"
+#include "files/traits/compiled.hpp"
+#include "files/traits/executable.hpp"
+#include "files/traits/input.hpp"
+#include "files/traits/inspected.hpp"
+// #include "files/traits/lib.hpp"
+#include "files/traits/runtime.hpp"
+#include "files/traits/sgraph.hpp"
+#include "files/traits/translation.hpp"
+#include "files/traits/undefined.hpp"
